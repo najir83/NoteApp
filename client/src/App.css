@@ -1,5 +1,74 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-   themes: light --default  , dark --prefersdark,cupcake;
+   themes: all;
  }
 
+[data-theme="dark"] {
+  .samplebg {
+    background-color: #070d10;
+    border-color: #111a1f;
+  }
+  .noteBord {
+    background-color: #0e2c3a;
+
+  }
+  .notes{
+    background-color: #0d2f2c;
+
+  }
+  .selected-notes{
+    background-color: #154945;
+
+  }
+  .text-bg{
+    background-color: #191717;
+
+  }
+  .text-bgc{
+    background-color: #332727;
+
+  }
+  .text-bgy{
+    background-color: #a0a0a0;
+
+  }
+  .text-c{
+   color: white;
+
+  }
+}
+
+[data-theme="black"] {
+  .samplebg {
+    background-color: #070d10;
+    border-color: #111a1f;
+  }
+  .noteBord {
+    background-color: #0e2c3a;
+
+  }
+  .notes{
+    background-color: #0d2f2c;
+
+  }
+  .selected-notes{
+    background-color: #154945;
+
+  }
+  .text-bg{
+    background-color: #191717;
+
+  }
+  .text-bgc{
+    background-color: #332727;
+
+  }
+  .text-bgy{
+    background-color: #a0a0a0;
+
+  }
+  .text-c{
+   color: white;
+
+  }
+}

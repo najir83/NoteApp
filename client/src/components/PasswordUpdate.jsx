@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import axiosInstance from "../api/axiosInstance";
 import { useNavigate } from "react-router";
 import { toast, Bounce } from "react-toastify";
+import useStore from "../store";
+
 const PasswordUpdate = () => {
+  const { theme } = useStore();
   const go = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -20,8 +23,6 @@ const PasswordUpdate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Signup Data:", formData);
-
     try {
       const response = await axiosInstance.post(
         "/user/updatePassword",
@@ -44,13 +45,12 @@ const PasswordUpdate = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: theme,
         transition: Bounce,
       });
       go("/signin");
-      // console.log("Signup success:", response.data);
     } catch (error) {
-      toast.error(error.response?.data.message, {
+      toast.error(error.response?.data.message || "Error occurred", {
         position: "top-right",
         autoClose: 2500,
         hideProgressBar: false,
@@ -58,25 +58,31 @@ const PasswordUpdate = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: theme,
         transition: Bounce,
       });
-      console.error("Signup error:", error.response?.data || error.message);
     }
   };
 
+  // Theme-based styles
+  const bgWrapper = theme === "dark" ? "bg-base-200" : "bg-gray-100";
+  const formBg = theme === "dark" ? "bg-base-100 text-base-content" : "bg-white text-gray-800";
+  const labelColor = theme === "dark" ? "text-gray-300" : "text-gray-700";
+  const inputStyle =
+    theme === "dark"
+      ? "bg-neutral text-white border-gray-600 focus:ring-blue-400"
+      : "border focus:ring-blue-400";
+
   return (
-    <div className="flex items-center justify-center h-[84vh] bg-gray-100">
+    <div className={`flex items-center justify-center h-[84vh] ${bgWrapper}`}>
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md"
+        className={`p-8 rounded-2xl shadow-lg w-full max-w-md ${formBg}`}
       >
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
-          Update Password
-        </h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Update Password</h2>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className={`block text-sm font-medium mb-1 ${labelColor}`}>
             Name
           </label>
           <input
@@ -84,14 +90,14 @@ const PasswordUpdate = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${inputStyle}`}
             placeholder="Enter your name"
             required
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className={`block text-sm font-medium mb-1 ${labelColor}`}>
             Email
           </label>
           <input
@@ -99,14 +105,14 @@ const PasswordUpdate = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${inputStyle}`}
             placeholder="Enter your email"
             required
           />
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className={`block text-sm font-medium mb-1 ${labelColor}`}>
             Password
           </label>
           <input
@@ -114,7 +120,7 @@ const PasswordUpdate = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${inputStyle}`}
             placeholder="Enter the new password"
             required
           />
@@ -126,13 +132,6 @@ const PasswordUpdate = () => {
         >
           Update
         </button>
-
-        {/* <p className="mt-4 text-sm text-center text-gray-600">
-          Already have an account?{" "}
-          <a href="/signin" className="text-blue-600 hover:underline">
-            Login
-          </a>
-        </p> */}
       </form>
     </div>
   );

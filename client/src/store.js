@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import axiosInstance from "./api/axiosInstance";
 const useStore = create((set, get) => ({
-  theme: "light",
+  theme: "dark",
   user: null,
   userLogin: false,
   isSignup: false,
@@ -10,8 +10,12 @@ const useStore = create((set, get) => ({
   isSubmitting: false,
   userLogout: true,
   Reload: false,
- 
+
+  setTheme: (e) => {
+    set({ theme: e });
+  },
   setUser: async () => {
+    
     try {
       const res = await axiosInstance.get("user/");
       if (!res.data?.user) return false;
@@ -47,7 +51,6 @@ const useStore = create((set, get) => ({
   setReload: (e) => {
     set({ Reload: e });
   },
-
 }));
 
 export default useStore;

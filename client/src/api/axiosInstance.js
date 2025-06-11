@@ -1,11 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5001', // replace with your actual API base URL
-  timeout: 5000,
-  withCredentials: true, 
+  baseURL: 'https://noteapp-pml3.onrender.com',
+  withCredentials: true,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     // 'Authorization': 'Bearer your_token' // Optional: set default auth header
   },
 });

@@ -17,12 +17,9 @@ import useStore from "./store";
 
 function App() {
   const navigate = useNavigate();
-  const { user, setUser, userLogin, userLogout, Reload } =
-    useStore();
+  const { user, setUser, userLogin, userLogout, Reload } = useStore();
   useEffect(() => {
-
-    setUser(); 
-   
+    setUser();
   }, [userLogin, userLogout, Reload]);
   return (
     <Routes>
@@ -32,10 +29,7 @@ function App() {
           index
           element={user ? <Home /> : <Navigate to="/signin" replace />}
         />
-        <Route
-          path="/Settings"
-          element={user ? <Settings /> : <Navigate to="/signin" replace />}
-        />
+        <Route path="/Settings" element={user ? <Settings /> : <Navigate to="/signin" replace />}/>
         <Route
           path="/Signin"
           element={!user ? <Signin /> : <Navigate to="/" replace />}
