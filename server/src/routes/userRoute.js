@@ -45,7 +45,12 @@ UserRouter.post("/signin", async (req, res) => {
   }
 });
 UserRouter.post("/logout", authRequire, (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None", // or "None" if you're using cross-origin
+  });
+
   return res.status(200).json({ message: "Logout successful" });
 });
 UserRouter.post("/updatePassword", async (req, res) => {
