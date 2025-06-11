@@ -26,7 +26,7 @@ const useStore = create((set, get) => ({
       set({ user: res.data.user });
       return true;
     } catch (e) {
-      console.log("error : ", e?.response?.data?.message || e.message);
+      // console.log("error : ", e?.response?.data?.message || e.message);
     }
   },
 
