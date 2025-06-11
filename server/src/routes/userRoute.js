@@ -32,8 +32,9 @@ UserRouter.post("/signin", async (req, res) => {
     return res
       .cookie("token", token, {
         httpOnly: true, // Prevents JS access (XSS protection)
-        secure: true, // Sends only over HTTPS
-        sameSite: "Strict", // Helps prevent CSRF
+        sameSite: "None", // allows cross-origin
+        secure: true, // required for sameSite=None to work on HTTPS (Render)
+
         maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
       })
       .json({ message: "Login Successful" });
