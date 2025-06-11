@@ -9,7 +9,7 @@ import notesRouter from "./routes/notesRoute.js";
 import { authRequire } from "./authService/authRequired.middlewire.js";
 
 dotenv.config();
-console.log(process.env.ORIGIN);
+// console.log(process.env.ORIGIN);
 const app = express();
 app.use(
   cors({
