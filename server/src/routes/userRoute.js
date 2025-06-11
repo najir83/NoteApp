@@ -18,7 +18,7 @@ UserRouter.post("/signup", async (req, res) => {
   });
   return res.status(201).json({ message: "user created successfully" });
 });
-UserRouter.get("/", authRequire, (req, res) => {
+UserRouter.get("/", (req, res) => {
   return res.json({
     user: req.user || null,
   });
