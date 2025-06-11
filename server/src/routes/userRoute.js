@@ -30,7 +30,12 @@ UserRouter.post("/signin", async (req, res) => {
     const token = await User.matchPasswordAndAuthenticate(email, password);
     // console.log(token);
     return res
-      .cookie("token", token, { maxAge: 1000 * 60 * 60 * 24 * 7 })
+      .cookie("token", token, {
+        httpOnly: true, // Prevents JS access (XSS protection)
+        secure: true, // Sends only over HTTPS
+        sameSite: "Strict", // Helps prevent CSRF
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+      })
       .json({ message: "Login Successful" });
   } catch (e) {
     return res
@@ -44,7 +49,7 @@ UserRouter.post("/logout", authRequire, (req, res) => {
 });
 UserRouter.post("/updatePassword", async (req, res) => {
   const { name, email, password } = req.body;
-  const user = await User.findOne({ email,name });
+  const user = await User.findOne({ email, name });
 
   if (!user) {
     return res.status(404).json({ message: "user not found" });
