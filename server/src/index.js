@@ -5,6 +5,11 @@ import UserRouter from "./routes/userRoute.js";
 import cookieParser from "cookie-parser";
 import checkAuthentication from "./authService/checkauth.middlewire.js";
 import cors from 'cors'
+import notesRouter from "./routes/notesRoute.js";
+import { authRequire } from "./authService/authRequired.middlewire.js";
+
+
+
 dotenv.config();
 
 const app = express();
@@ -22,6 +27,7 @@ app.use(cookieParser());
 app.use(checkAuthentication("token"));
 
 app.use("/user", UserRouter);
+app.use("/notes",authRequire,notesRouter);
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
@@ -29,5 +35,10 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
+
+
+
+
 
 
