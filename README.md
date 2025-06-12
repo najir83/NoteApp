@@ -18,7 +18,12 @@ A full-stack, modern note-taking web app built with **React (Vite)** on the fron
 
 ## 📸 Screenshot
 
+- Login Page
 ![Notiq UI Screenshot](Screenshot.png) 
+- Home Page
+![Notiq UI Screenshot](Screenshot2.png) 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
 ## ✨ Features
 
 ### ✅ Frontend (`client/`)
