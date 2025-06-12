@@ -20,7 +20,7 @@ const NotSelected = () => {
         <rect x="0" y="104" rx="5" ry="5" width="220" height="10" />
         <rect x="0" y="122" rx="5" ry="5" width="220" height="10" />
       </ContentLoader>
-      <div className="fixed top-60 right-30 md:top-80 md:right-200 flex flex-col gap-2 justify-center items-center">
+      <div className="fixed top-60 right-30 md:top-90 md:right-220 flex flex-col gap-2 justify-center items-center">
         <h1 className="text-2xl italic font-sans text-green-800 font-bold">
           Welcome To Notiq !!
         </h1>
