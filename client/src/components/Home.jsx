@@ -24,9 +24,12 @@ const Home = () => {
   }, [selectedIndex]);
 
   const handleClick = (i) => {
-    if (selectedIndex != i) setselectedIndex(i);
+    if (selectedIndex != i){ setselectedIndex(i);
+      setSide(1);
+    }
     else {
       setselectedIndex(-1);
+      setSide(1);
     }
   };
 
@@ -208,13 +211,17 @@ const Home = () => {
     <div className="w-full h-[84vh] flex flex-col md:flex-row sm:relative">
       <button
         onClick={toggleSide}
-        className="text-right md:hidden cursor-pointer text-2xl px-2 py-1 hover:text-gray-500 hover:font-bold "
+        className="transition text-right md:hidden cursor-pointer text-2xl px-2 py-1 hover:text-gray-500 hover:font-bold "
       >
         {mobileSide ? "⋮" : <span className="font-black">X</span>}
       </button>
 
       {/* Sidebar */}
-      <div className={`w-full ${mobileSide ? "hidden":""} md:block md:w-1/5  h-full md:h-full border-b md:border-b-0 md:border-r overflow-y-auto`}>
+      <div className={`w-full transition-all duration-300 ease-in-out 
+  ${mobileSide ? "opacity-0 -translate-x-full absolute" : "opacity-100 translate-x-0"} 
+  md:translate-x-0 md:opacity-100 md:static md:block md:w-1/5 
+  h-full md:h-full border-b md:border-b-0 md:border-r overflow-y-auto`}>
+
         <div className="flex items-center justify-between px-3 py-2 bg-sky-500 noteBord">
           <h1 className="text-lg md:text-xl font-black">Notes</h1>
           <button
@@ -226,7 +233,7 @@ const Home = () => {
             Add
           </button>
         </div>
-        <div className="overflow-y-scroll h-[calc(30vh-3rem)] md:h-[77vh]">
+        <div className="overflow-y-scroll h-[calc(36vh-3rem)] md:h-[77vh]">
           {Notes.map((e, i) => (
             <div
               onClick={() => handleClick(i)}
