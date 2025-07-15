@@ -10,12 +10,15 @@ const useStore = create((set, get) => ({
   isSubmitting: false,
   userLogout: true,
   Reload: false,
+  activeNav: false,
 
   setTheme: (e) => {
     set({ theme: e });
   },
+  setActiveNav: (e) => {
+    set({ activeNav: e });
+  },
   setUser: async () => {
-    
     try {
       const res = await axiosInstance.get("user/");
       if (!res.data?.user) return false;

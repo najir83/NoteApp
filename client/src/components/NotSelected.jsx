@@ -11,7 +11,7 @@ const NotSelected = () => {
         height="100%"
         className="w-full h-full"
         backgroundColor={`${theme=='light' ? "#f3f3f3" : (theme=='dark' ? "#4b5563":"#000000") }`}
-        foregroundColor={`${theme=='light' ? "#ecebeb" : (theme=='dark' ? "#6b7280" : "#1a1a1a")}`}
+        foregroundColor={`${theme=='light' ? "#ecebeb" : (theme==                                                                         'dark' ? "#6b7280" : "#1a1a1a")}`}
       >
         <rect x="0" y="12" rx="5" ry="5" width="220" height="10" />
         <rect x="0" y="29" rx="5" ry="5" width="220" height="10" />

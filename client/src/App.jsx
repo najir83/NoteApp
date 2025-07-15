@@ -14,6 +14,7 @@ import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import PasswordUpdate from "./components/PasswordUpdate";
 import useStore from "./store";
+import CreateNote from "./components/CreateNote";
 
 function App() {
   const navigate = useNavigate();
@@ -24,12 +25,16 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
+        <Route path="/" index element=<Home /> />
         <Route
-          path="/"
+          path="/createnote"
           index
-          element={user ? <Home /> : <Navigate to="/signin" replace />}
+          element={user ? <CreateNote /> : <Navigate to="/signin" replace />}
         />
-        <Route path="/Settings" element={user ? <Settings /> : <Navigate to="/signin" replace />}/>
+        <Route
+          path="/Settings"
+          element={user ? <Settings /> : <Navigate to="/signin" replace />}
+        />
         <Route
           path="/Signin"
           element={!user ? <Signin /> : <Navigate to="/" replace />}

@@ -2,7 +2,31 @@
 @plugin "daisyui" {
    themes: all;
  }
+/* Customize the cursor */
+.typed-cursor {
+  font-size: 30px;         /* Increase the font size of the cursor */
+           /* Change the cursor color to red */
+  animation: blink 0.7s step-end infinite; /* Add a blinking effect */
+}
+.typed-text {
+  font-size: 30px;         /* Increase the font size of the cursor */
+  color: red;              /* Change the cursor color to red */
+ /* Add a blinking effect */
+}
 
+/* Optional: If you want the cursor to blink with a specific effect */
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+[data-theme="light"] {
+ .navv {
+background-color: rgb(226, 33, 33);
+color: white;
+ }
+  }
 [data-theme="dark"] {
   .samplebg {
     background-color: #070d10;
@@ -11,6 +35,12 @@
   .noteBord {
     background-color: #0e2c3a;
 
+  }
+  .navButton{
+    color: white;
+  }
+   .mobNav{                       
+    background:#070910;
   }
   .notes{
     background-color: #0d2f2c;
@@ -42,6 +72,12 @@
   .samplebg {
     background-color: #070d10;
     border-color: #111a1f;
+  }
+  .mobNav{
+    background:gray ;
+  }
+   .navButton{
+    color: white;
   }
   .noteBord {
     background-color: #0e2c3a;

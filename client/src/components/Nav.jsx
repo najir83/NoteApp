@@ -4,10 +4,32 @@ import useStore from "../store";
 import axiosInstance from "../api/axiosInstance";
 import { toast, Bounce } from "react-toastify";
 const Nav = () => {
-  const { setLogin, setuserLogout, Reload, setReload } = useStore();
+  const {
+    setLogin,
+    setuserLogout,
+    Reload,
+    setReload,
+    setActiveNav,
+    activeNav,
+  } = useStore();
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [showNav, setShowNav] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [768]);
+
+  // console.log(isMobile);
   const navLinkClass = ({ isActive }) =>
-    `hover:text-gray-700 ${
-      isActive ? "text-red-500 font-bold" : "text-gray-500"
+    ` ${
+      isActive
+        ? "text-red-500 font-bold "
+        : "text-gray-500 navButton hover:font-bold hover:text-gray-700 "
     }`;
   const logout = async () => {
     setReload(1);
@@ -57,55 +79,123 @@ const Nav = () => {
   return (
     <div
       data-theme={theme}
-      className="w-full  h-[8vh] flex justify-between pl-4 pr-4 items-center bg-amber-100 samplebg"
+      className="w-full  h-[10vh] flex justify-between px-4 lg:pl-14 lg:pr-14 items-center bg-amber-100 samplebg "
     >
       <Link to="/" className="font-bold text-xl">
         <span className="text-2xl text-green-400">&lt;</span> Notiq{" "}
         <span className="text-2xl text-green-400">/&gt;</span>
       </Link>
+      {!isMobile && (
+        <div className="flex justify-around text-lg   space-x-10">
+          <NavLink to="/" className={navLinkClass}>
+            Home
+          </NavLink>
+          <NavLink to="/createnote" className={navLinkClass}>
+            Notes
+          </NavLink>
+          <NavLink to="/settings" className={navLinkClass}>
+            Settings
+          </NavLink>
+         
+        
+        </div>
+      )}
+
       <ul className="flex space-x-3 items-center">
-        <NavLink to="/" className={navLinkClass}>
-          Home
-        </NavLink>
-        <NavLink
-          to="/signup"
-          className={` ${navLinkClass} ${user ? "hidden" : ""}`}
-        >
-          SignUp
-        </NavLink>
-        <NavLink
-          to="/signin"
-          className={` ${navLinkClass} ${user ? "hidden" : ""}`}
-        >
-          Login
-        </NavLink>
-        <NavLink to="/settings" className={navLinkClass}>
-          Settings
-        </NavLink>
-        <button
-          onClick={logout}
-          className={` ${!user ? "hidden" : ""} hover:font-bold px-2 py-1 bg-amber-700 rounded-2xl cursor-pointer hover:bg-amber-800 text-indigo-300`}
-        >
-          logout
-        </button>
-        <li className="flex flex-col items-center justify-center ">
+        {!isMobile && <> <NavLink
+            to="/signup"
+            className={`font-bold hover:font-black bg-gray-900 p-4 py-3 cursor-pointer ${user ? "hidden" : ""}`}
+          >
+            SignUp
+          </NavLink>
+          <NavLink
+            to="/signin"
+            className={` font-bold hover:font-black bg-gray-900 p-4 py-3  cursor-pointer  ${user ? "hidden" : ""}`}
+          >
+            Login
+          </NavLink>
+
+            <button
+            onClick={logout}
+            className={` ${
+              !user ? "hidden" : ""
+              }font-bold hover:font-black bg-gray-900 px-6  cursor-pointer py-3  navv`}
+              >
+            logout
+          </button>
+          </>}
+        <li className="flex items-center justify-center gap-2 ">
+          <div className="flex flex-col  items-center justify-center text-sm">
+          
           <img
             className="w-10 h-10 rounded-full"
             src="defaultPic.jpg"
             alt="default"
-          />
+            />
           <div
-           
             className={`${
               user ? "" : "hidden"
-            } w-20 p-1 flex flex-col gap-2 items-center cursor-pointer`}
-          >
-            <p>
-              {user?.name}{" "}
-            </p>
+            } w-full p-2 flex flex-col gap-2 items-center cursor-pointer `}
+            >
+            <p>{user?.name} </p>
           </div>
+            </div>
+
+          {isMobile && (
+            <button
+              onClick={() => {
+                setActiveNav(!activeNav);
+                setShowNav(!showNav);
+              }}
+              className={`fa-solid text-lg  fa-angle-${
+                showNav ? "down" : "up"
+              }`}
+            ></button>
+          )}
         </li>
       </ul>
+      {isMobile && showNav && (
+        <div onClick={()=>{
+           setActiveNav(!activeNav);
+          setShowNav(!showNav)}} className="flex flex-col w-70 h-75 rounded-b-xl right-3 p-4 items-center top-16 bg-slate-200 z-10  absolute gap-6  mobNav ">
+          <div
+            className={`${
+              user ? "" : "hidden"
+            } w-full p-2 flex flex-col gap-2 items-center cursor-pointer border-b-1`}
+          >
+            <p>{user?.name} </p>
+          </div>
+          <NavLink to="/" className={navLinkClass}>
+            Home
+          </NavLink>
+          <NavLink to="/createnote" className={navLinkClass}>
+            Notes
+          </NavLink>
+          <NavLink to="/settings" className={navLinkClass}>
+            Settings
+          </NavLink>
+         <NavLink
+            to="/signup"
+            className={`font-bold w-30 text-center hover:font-black bg-gray-900 p-4 py-3 ${user ? "hidden" : ""}`}
+          >
+            SignUp
+          </NavLink>
+          <NavLink
+            to="/signin"
+            className={` font-bold w-30 text-center hover:font-black bg-gray-900 p-4 py-3   ${user ? "hidden" : ""}`}
+          >
+            Login
+          </NavLink>
+          <button
+            onClick={logout}
+            className={` ${
+              !user ? "hidden" : ""
+            } hover:font-bold px-8 py-2  bg-amber-700 rounded-2xl cursor-pointer  hover:bg-amber-800 text-white`}
+          >
+            logout
+          </button>
+        </div>
+      )}
     </div>
   );
 };
