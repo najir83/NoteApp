@@ -74,7 +74,7 @@ const PasswordUpdate = () => {
       : "border focus:ring-blue-400";
 
   return (
-    <div className={`flex items-center justify-center h-[84vh] ${bgWrapper}`}>
+    <div data-theme="dark" className={`flex items-center justify-center h-[84vh] ${bgWrapper}`}>
       <form
         onSubmit={handleSubmit}
         className={`p-8 rounded-2xl shadow-lg w-full max-w-md ${formBg}`}

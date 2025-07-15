@@ -1,9 +1,13 @@
 import React from "react";
 import useStore from "../store";
 const Settings = () => {
-  const { theme, setTheme } = useStore();
+  const { theme, setTheme,activeNav } = useStore();
   return (
-    <div className="w-full  h-[84vh] ">
+    <div
+      className={`w-full  h-[84vh] ${
+        activeNav && "opacity-40 pointer-events-none"
+      } `}
+    >
       <div className="container mx-auto flex justify-center  pt-10 gap-10 ">
         <p className="text-lg font-bold">Select Theme : </p>
         <button

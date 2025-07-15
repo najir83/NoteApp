@@ -18,7 +18,7 @@ const Footer = () => {
           href="https://github.com/najir83/NoteApp"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-gray-300 transition"
+          className="hover:text-gray-300  fott transition"
         >
           <FaGithub size={24} />
         </a>
@@ -26,7 +26,7 @@ const Footer = () => {
           href="https://www.linkedin.com/in/sk-najir-0b0177285/"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-blue-300 transition"
+          className="hover:text-blue-300 text-white font-black fott transition"
         >
           <FaLinkedin size={24} />
         </a>

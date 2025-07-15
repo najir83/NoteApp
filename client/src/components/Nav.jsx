@@ -115,7 +115,7 @@ const Nav = () => {
             Login
           </NavLink>
 
-            <button
+           {user && <button
             onClick={logout}
             className={` ${
               !user ? "hidden" : ""
@@ -123,6 +123,7 @@ const Nav = () => {
               >
             logout
           </button>
+}
           </>}
         <li className="flex items-center justify-center gap-2 ">
           <div className="flex flex-col  items-center justify-center text-sm">

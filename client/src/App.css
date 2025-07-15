@@ -26,6 +26,9 @@
 background-color: rgb(226, 33, 33);
 color: white;
  }
+ .fott{
+  background-color: black;
+ }
   }
 [data-theme="dark"] {
   .samplebg {

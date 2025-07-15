@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import axiosInstance from "./api/axiosInstance";
 const useStore = create((set, get) => ({
-  theme: "dark",
+  theme: localStorage.getItem("note121-theme") || "dark",
   user: null,
   userLogin: false,
   isSignup: false,
@@ -14,6 +14,7 @@ const useStore = create((set, get) => ({
 
   setTheme: (e) => {
     set({ theme: e });
+      localStorage.setItem("note121-theme", e); 
   },
   setActiveNav: (e) => {
     set({ activeNav: e });

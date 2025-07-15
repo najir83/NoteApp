@@ -18,7 +18,7 @@ import CreateNote from "./components/CreateNote";
 
 function App() {
   const navigate = useNavigate();
-  const { user, setUser, userLogin, userLogout, Reload } = useStore();
+  const { user, setUser, userLogin, userLogout, Reload, setTheme } = useStore();
   useEffect(() => {
     setUser();
   }, [userLogin, userLogout, Reload]);

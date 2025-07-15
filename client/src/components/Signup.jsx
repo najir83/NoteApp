@@ -86,7 +86,7 @@ const noteText = theme === "dark" || "dark" ? "text-gray-400" : "text-gray-600";
   return isSignup ? (
     <Loading />
   ) : (
-    <div className={`flex items-center justify-center h-[84vh] ${wrapperBg}`}>
+    <div data-theme="dark" className={`flex items-center justify-center h-[84vh] ${wrapperBg}`}>
       <form
         onSubmit={handleSubmit}
         className={`p-8 rounded-2xl shadow-lg w-full max-w-md ${formBg}`}
