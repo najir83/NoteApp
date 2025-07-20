@@ -258,7 +258,7 @@ const CreateNote = () => {
             )}
 
             <div className="bg-gray-50 text-bg rounded-md p-4">
-              <div className="ml-77 lg:ml-345">
+              <div className="ml-70 lg:ml-345">
                 <button
                   hidden={isEditing}
                   ref={deleteRef}
