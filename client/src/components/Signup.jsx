@@ -13,6 +13,7 @@ const Signup = () => {
     setSignup,
     setSubmitting,
     theme,
+    setTheme,
   } = useStore();
 
   const go = useNavigate();
@@ -28,7 +29,9 @@ const Signup = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
+  useEffect(() => {
+    setTheme("dark");
+  }, []);
   useEffect(() => {}, [isSignup]);
 
   const handleSubmit = async (e) => {
@@ -36,15 +39,11 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const response = await axiosInstance.post(
-        "/user/signup",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axiosInstance.post("/user/signup", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       go("/signin");
       toast.success("Signup Successful", {
         position: "top-right",
@@ -75,18 +74,27 @@ const Signup = () => {
       setSignup(false);
     }
   };
-const wrapperBg = theme === "dark" || "dark" ? "bg-base-200" : "bg-gray-100";
-const formBg = theme === "dark" || "dark" ? "bg-base-100 text-base-content" : "bg-white text-gray-800";
-const labelColor = theme === "dark" || "dark" ? "text-gray-300" : "text-gray-700";
-const inputStyle = theme === "dark" || "dark"
-  ? "bg-neutral text-white border-gray-600 focus:ring-blue-400"
-  : "border focus:ring-blue-400";
-const noteText = theme === "dark" || "dark" ? "text-gray-400" : "text-gray-600";
+  const wrapperBg = theme === "dark" || "dark" ? "bg-base-200" : "bg-gray-100";
+  const formBg =
+    theme === "dark" || "dark"
+      ? "bg-base-100 text-base-content"
+      : "bg-white text-gray-800";
+  const labelColor =
+    theme === "dark" || "dark" ? "text-gray-300" : "text-gray-700";
+  const inputStyle =
+    theme === "dark" || "dark"
+      ? "bg-neutral text-white border-gray-600 focus:ring-blue-400"
+      : "border focus:ring-blue-400";
+  const noteText =
+    theme === "dark" || "dark" ? "text-gray-400" : "text-gray-600";
 
   return isSignup ? (
     <Loading />
   ) : (
-    <div data-theme="dark" className={`flex items-center justify-center h-[84vh] ${wrapperBg}`}>
+    <div
+      data-theme="dark"
+      className={`flex items-center justify-center h-[84vh] ${wrapperBg}`}
+    >
       <form
         onSubmit={handleSubmit}
         className={`p-8 rounded-2xl shadow-lg w-full max-w-md ${formBg}`}
@@ -140,7 +148,7 @@ const noteText = theme === "dark" || "dark" ? "text-gray-400" : "text-gray-600";
 
         <button
           type="submit"
-          className="cursor-pointer w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+          className="cursor-pointer w-full bg-gray-900 hover:bg-gray-950 hover:font-black text-white py-2 rounded-lg font-semibold  transition"
         >
           Create Account
         </button>

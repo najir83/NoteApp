@@ -14,8 +14,11 @@ const Signin = () => {
     setisLogining,
     setLogin,
     theme,
+    setTheme
   } = useStore();
-
+ useEffect(() => {
+    setTheme("dark");
+  }, []);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -114,7 +117,7 @@ const inputStyle =
 
         <button
           type="submit"
-          className="cursor-pointer w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+          className="cursor-pointer w-full text-white py-3 rounded-lg font-semibold transition bg-gray-900 hover:bg-gray-950 hover:font-black "
         >
           Login
         </button>

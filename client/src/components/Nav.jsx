@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import useStore from "../store";
 import axiosInstance from "../api/axiosInstance";
@@ -76,6 +76,7 @@ const Nav = () => {
     }
   };
   const { theme, user } = useStore();
+  console.log(user);
   return (
     <div
       data-theme={theme}
@@ -104,13 +105,13 @@ const Nav = () => {
       <ul className="flex space-x-3 items-center">
         {!isMobile && <> <NavLink
             to="/signup"
-            className={`font-bold hover:font-black bg-gray-900 p-4 py-3 cursor-pointer ${user ? "hidden" : ""}`}
+            className={`font-bold hover:font-black bgn-b bg-gray-900 p-4 py-3 cursor-pointer ${user ? "hidden" : ""}`}
           >
             SignUp
           </NavLink>
           <NavLink
             to="/signin"
-            className={` font-bold hover:font-black bg-gray-900 p-4 py-3  cursor-pointer  ${user ? "hidden" : ""}`}
+            className={` font-bold w-30 text-center bgn-b  hover:font-black bg-gray-900 p-4 py-3   ${user ? "hidden" : ""}`}
           >
             Login
           </NavLink>
@@ -175,26 +176,28 @@ const Nav = () => {
           <NavLink to="/settings" className={navLinkClass}>
             Settings
           </NavLink>
-         <NavLink
+          {isMobile && <NavLink
             to="/signup"
-            className={`font-bold w-30 text-center hover:font-black bg-gray-900 p-4 py-3 ${user ? "hidden" : ""}`}
+            className={`font-bold w-30 bgn-b text-center hover:font-black bg-gray-900 p-4 py-3 ${user ? "hidden" : ""}`}
           >
             SignUp
-          </NavLink>
-          <NavLink
+          </NavLink>}
+         
+         {isMobile && <NavLink
             to="/signin"
-            className={` font-bold w-30 text-center hover:font-black bg-gray-900 p-4 py-3   ${user ? "hidden" : ""}`}
+            className={` font-bold w-30 text-center bgn-b  hover:font-black bg-gray-900 p-4 py-3   ${user ? "hidden" : ""}`}
           >
             Login
-          </NavLink>
-          <button
+          </NavLink>}
+             {user && <button
             onClick={logout}
             className={` ${
               !user ? "hidden" : ""
-            } hover:font-bold px-8 py-2  bg-amber-700 rounded-2xl cursor-pointer  hover:bg-amber-800 text-white`}
-          >
+              }font-bold hover:font-black bg-gray-900 px-6  cursor-pointer py-3  navv`}
+              >
             logout
           </button>
+}
         </div>
       )}
     </div>

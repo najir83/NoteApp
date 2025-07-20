@@ -7,6 +7,7 @@ import useStore from "../store";
 const PasswordUpdate = () => {
   const { theme } = useStore();
   const go = useNavigate();
+  const [isUpdating, setIsUpdating] = useState(0);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -23,6 +24,8 @@ const PasswordUpdate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isUpdating) return;
+    setIsUpdating(1);
     try {
       const response = await axiosInstance.post(
         "/user/updatePassword",
@@ -48,6 +51,8 @@ const PasswordUpdate = () => {
         theme: theme,
         transition: Bounce,
       });
+      setIsUpdating(0);
+
       go("/signin");
     } catch (error) {
       toast.error(error.response?.data.message || "Error occurred", {
@@ -61,12 +66,16 @@ const PasswordUpdate = () => {
         theme: theme,
         transition: Bounce,
       });
+      setIsUpdating(0);
     }
   };
 
   // Theme-based styles
   const bgWrapper = theme === "dark" ? "bg-base-200" : "bg-gray-100";
-  const formBg = theme === "dark" ? "bg-base-100 text-base-content" : "bg-white text-gray-800";
+  const formBg =
+    theme === "dark"
+      ? "bg-base-100 text-base-content"
+      : "bg-white text-gray-800";
   const labelColor = theme === "dark" ? "text-gray-300" : "text-gray-700";
   const inputStyle =
     theme === "dark"
@@ -74,7 +83,10 @@ const PasswordUpdate = () => {
       : "border focus:ring-blue-400";
 
   return (
-    <div data-theme="dark" className={`flex items-center justify-center h-[84vh] ${bgWrapper}`}>
+    <div
+      data-theme="dark"
+      className={`flex items-center justify-center h-[84vh] ${bgWrapper}`}
+    >
       <form
         onSubmit={handleSubmit}
         className={`p-8 rounded-2xl shadow-lg w-full max-w-md ${formBg}`}
@@ -128,9 +140,11 @@ const PasswordUpdate = () => {
 
         <button
           type="submit"
-          className="cursor-pointer w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+          className={`cursor-pointer ${
+            isUpdating ? "pointer-events-none" : ""
+          } w-full  text-white py-2 rounded-lg font-semibold bg-gray-900 hover:bg-gray-950 hover:font-black transition`}
         >
-          Update
+          {isUpdating ? "Updating" : "Update"}
         </button>
       </form>
     </div>
