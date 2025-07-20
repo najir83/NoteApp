@@ -8,7 +8,7 @@ import { toast, Bounce } from "react-toastify";
 const CreateNote = () => {
   const saveref = useRef(null);
   const deleteRef = useRef(null);
-  const { Reload, theme, setReload,activeNav } = useStore();
+  const { Reload, theme, setReload, activeNav } = useStore();
 
   const [Notes, setNotes] = useState([]);
   const [selectedIndex, setselectedIndex] = useState(-1);
@@ -100,6 +100,7 @@ const CreateNote = () => {
         },
         { headers: { "Content-Type": "application/json" } }
       );
+      setIsEditing(false);
       toast.success("Update Successful", { transition: Bounce });
     } catch (error) {
       toast.error(error.response?.data?.message, { transition: Bounce });
@@ -132,10 +133,16 @@ const CreateNote = () => {
     setSide(!mobileSide);
   };
 
+  const [isEditing, setIsEditing] = useState(false);
+
   return Reload ? (
     <Loading />
   ) : (
-    <div className={`w-full h-[84vh] flex flex-col md:flex-row sm:relative ${activeNav &&   'opacity-40 pointer-events-none'}`}>
+    <div
+      className={`w-full h-[84vh] flex flex-col md:flex-row sm:relative ${
+        activeNav && "opacity-40 pointer-events-none"
+      }`}
+    >
       <button
         onClick={toggleSide}
         className="transition text-right md:hidden cursor-pointer text-2xl px-2 py-1 hover:text-gray-500 hover:font-bold"
@@ -146,7 +153,11 @@ const CreateNote = () => {
       {/* Sidebar */}
       <div
         className={`w-full transition-all duration-300 ease-in-out 
-        ${mobileSide ? "opacity-0 -translate-x-full absolute" : "opacity-100 translate-x-0"} 
+        ${
+          mobileSide
+            ? "opacity-0 -translate-x-full absolute"
+            : "opacity-100 translate-x-0"
+        } 
         md:translate-x-0 md:opacity-100 md:static md:block md:w-1/5 
         h-full md:h-full border-b md:border-b-0 md:border-r overflow-y-auto`}
       >
@@ -192,67 +203,84 @@ const CreateNote = () => {
       </div>
 
       {/* Editor */}
-      <div className={`${!mobileSide ? "hidden" : ""} w-full md:w-4/5 h-full overflow-y-scroll p-4`}>
+      <div
+        className={`${
+          !mobileSide ? "hidden" : ""
+        } w-full md:w-4/5 h-full overflow-y-scroll p-4`}
+      >
         {selectedIndex === -1 ? (
           <NotSelected />
         ) : (
           <div className="space-y-4">
-            <div className="relative">
-              <h1 className="text-lg md:text-2xl font-bold">
-                Title:
-                <input
-                  value={Notes[selectedIndex]?.title || ""}
-                  onChange={handleTitleChange}
-                  className="block mt-1 w-full rounded-md bg-gray-100 text-bg font-semibold px-3 py-1 outline-none"
-                />
-              </h1>
-              <div className="absolute top-1 right-0 space-x-2">
-                <button
-                  ref={saveref}
-                  onClick={handleSave}
-                  className="bg-green-600 hover:bg-green-800 text-white font-bold px-3 py-1 rounded-md text-sm"
-                >
-                  Save
-                </button>
-                <button
-                  ref={deleteRef}
-                  onClick={handleDelete}
-                  className="bg-red-600 hover:bg-red-800 text-white font-bold px-3 py-1 rounded-md text-sm"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
+            {isEditing && (
+              <>
+                <div className="relative">
+                  <h1 className="text-lg md:text-2xl font-bold">
+                    Title:
+                    <input
+                      value={Notes[selectedIndex]?.title || ""}
+                      onChange={handleTitleChange}
+                      className="block mt-1 w-full rounded-md bg-gray-100 text-bg font-semibold px-3 py-1 outline-none"
+                    />
+                  </h1>
+                  <div className="absolute top-1 right-0 space-x-2">
+                    <button
+                      ref={saveref}
+                      onClick={handleSave}
+                      className="bg-green-600 hover:bg-green-800 text-white font-bold px-3 lg:px-5 lg:py-2 cursor-pointer  py-1  rounded-md text-sm"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
 
-            <div>
-              <h3 className="text-base font-medium">Content:</h3>
-              <textarea
-                placeholder="Enter the notes"
-                onChange={handleContentChange}
-                value={Notes[selectedIndex]?.Content || ""}
-                className="w-full min-h-[20vh] rounded-md bg-gray-100 text-bg px-3 py-2 outline-none"
-              />
-            </div>
+                <div>
+                  <h3 className="text-base font-bold ">Content:</h3>
+                  <textarea
+                    placeholder="Enter the notes"
+                    onChange={handleContentChange}
+                    value={Notes[selectedIndex]?.Content || ""}
+                    className="w-full min-h-[50vh] rounded-md bg-gray-100 text-bg px-3 py-2 outline-none"
+                  />
+                </div>
 
-            <div>
-              <h4 className="text-base font-medium">Tag:</h4>
-              <input
-                onChange={handleTagChange}
-                value={Notes[selectedIndex]?.Tag || ""}
-                className="w-full rounded-md bg-gray-100 text-bg px-3 py-1 outline-none"
-              />
-            </div>
+                <div>
+                  <h4 className="text-base font-medium">Tag:</h4>
+                  <input
+                    onChange={handleTagChange}
+                    value={Notes[selectedIndex]?.Tag || ""}
+                    className="w-full rounded-md bg-gray-100 text-bg px-3 py-1 outline-none"
+                  />
+                </div>
 
-            <div className="border-b-1 m-4"> Preview Section</div>
+                <div className="border-b-1 m-4"> Preview Section</div>
+              </>
+            )}
 
             <div className="bg-gray-50 text-bg rounded-md p-4">
+              <div className="ml-77 lg:ml-345">
+                <button
+                  hidden={isEditing}
+                  ref={deleteRef}
+                  onClick={handleDelete}
+                  className="  text-lg lg:text-xl cursor-pointer  font-bold px-3 py-1  rounded-md fa-solid fa-trash"
+                ></button>
+                {/* <i class="fa-solid fa-trash"></i> */}
+                <button
+                  onClick={() => setIsEditing(true)}
+                  hidden={isEditing}
+                  className={`   lg:text-xl cursor-pointer fa-solid text-lg fa-pen-to-square`}
+                ></button>
+              </div>
               <h1 className="text-xl font-bold text-center mb-2">
                 {Notes[selectedIndex]?.title || ""}
               </h1>
               <div className="w-full">
                 <textarea
                   readOnly
-                  value={selectedIndex < 0 ? "" : Notes[selectedIndex]?.Content || ""}
+                  value={
+                    selectedIndex < 0 ? "" : Notes[selectedIndex]?.Content || ""
+                  }
                   className="w-full resize-none bg-gray-100 text-bg border-0 outline-none rounded-md p-4 text-base min-h-[10vh]"
                   style={{ height: "auto", overflow: "hidden" }}
                   rows={1}
